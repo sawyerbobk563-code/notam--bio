@@ -1,1 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@udknow</title>
+    
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content="@udknow | Portfolio & Lab">
+    <meta property="og:description" content="Developer, Pilot, Athlete. Building at the edge.">
+    <meta property="og:image" content="https://yourdomain.com/og-image.png"> 
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta name="twitter:card" content="summary_large_image">
 
+    <!-- Google Fonts: Space Grotesk -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class', 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        nbrand: {
+                            pink: '#FF90E8',
+                            yellow: '#FFC900',
+                            blue: '#38B6FF',
+                            purple: '#A259FF',
+                            green: '#00D084',
+                            orange: '#FF7B54',
+                            bg: '#fdfbf7',
+                        }
+                    },
+                    animation: {
+                        'marquee': 'marquee 15s linear infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: 1 },
+                            '50%': { opacity: .5 },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .brutal-border {
+                @apply border-4 border-black dark:border-white;
+            }
+            .brutal-shadow {
+                @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)];
+            }
+            .brutal-shadow-sm {
+                @apply shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)];
+            }
+            .brutal-card {
+                @apply brutal-border brutal-shadow rounded-2xl bg-white dark:bg-zinc-800 overflow-hidden dark:text-white;
+            }
+            /* Glassmorphism Classes */
+            .glass-panel {
+                @apply bg-white/40 dark:bg-black/40 backdrop-blur-md border-2 border-white/50 dark:border-white/10 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.15)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,0.15)] rounded-2xl;
+            }
+            .glass-btn {
+                @apply bg-white/30 dark:bg-black/30 backdrop-blur-sm border-2 border-white/60 dark:border-white/20 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.2)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)] hover:bg-white/50 dark:hover:bg-white/10 transition-all duration-300;
+            }
+            .brutal-btn {
+                @apply brutal-border brutal-shadow-sm rounded-xl px-6 py-3 font-bold uppercase flex items-center justify-center gap-2 transition-all duration-150 active:shadow-[0px_0px_0px_0px_rgba(0,0,0,1)] dark:active:shadow-[0px_0px_0px_0px_rgba(255,255,255,1)] active:translate-x-[4px] active:translate-y-[4px] hover:-translate-y-1 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)];
+            }
+            .brutal-tag {
+                @apply border-2 border-black dark:border-white rounded-md px-2 py-1 text-xs font-bold uppercase bg-white dark:bg-zinc-700 dark:text-white;
+            }
+            .brutal-stroke {
+                -webkit-text-stroke: 2px black;
+            }
+            .dark .brutal-stroke {
+                -webkit-text-stroke: 2px white;
+            }
+        }
+
+        body, .bg-grid-pattern {
+            background-color: #fdfbf7;
+            background-image: radial-gradient(#000000 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .dark body, .dark .bg-grid-pattern {
+            background-color: #121212;
+            background-image: radial-gradient(#ffffff 1px, transparent 1px);
+        }
+
+        /* Scroll Animations */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .reveal-on-scroll.is-revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom Cursor Override */
+        .custom-cursor-enabled * {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23FF90E8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>') 12 12, auto !important;
+        }
+        .custom-cursor-enabled a, .custom-cursor-enabled button, .custom-cursor-enabled input, .custom-cursor-enabled textarea {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%23FFC900" stroke="%23000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 3 21 11 13 13 11 21 3 3"></polygon></svg>') 3 3, pointer !important;
+        }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: #fdfbf7; border-left: 4px solid black; }
+        .dark ::-webkit-scrollbar-track { background: #121212; border-left: 4px solid white; }
+        ::-webkit-scrollbar-thumb { background: #FF90E8; border: 4px solid black; border-right: none; }
+        .dark ::-webkit-scrollbar-thumb { border: 4px solid white; border-right: none; }
+    </style>
+</head>
+<body class="text-black dark:text-white antialiased min-h-screen py-8 px-4 sm:px-8 overflow-x-hidden relative transition-colors duration-300">
+
+    <div id="adminControls" class="fixed bottom-6 right-6 z-50 hidden flex-col gap-4">
+        <button onclick="saveToCloudflare()" class="brutal-btn bg-nbrand-green text-black"><i class="ph-bold ph-floppy-disk"></i> Save Changes</button>
+        <button onclick="openAddModal('project')" class="brutal-btn bg-nbrand-blue text-white"><i class="ph-bold ph-plus"></i> Add Drop</button>
+        <button onclick="openAddModal('lab')" class="brutal-btn bg-nbrand-orange text-white"><i class="ph-bold ph-plus"></i> Add Lab Item</button>
+        <button onclick="addCustomSection()" class="brutal-btn bg-nbrand-pink text-black"><i class="ph-bold ph-squares-four"></i> Add Section</button>
+    </div>
+
+    <div id="loginModal" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col items-center justify-center p-4 backdrop-blur-sm">
+        <div class="brutal-card p-8 max-w-sm w-full bg-nbrand-pink transform transition-transform duration-300 scale-95" id="loginCard">
+            <h2 class="text-2xl font-black mb-4 uppercase text-black">Admin Login</h2>
+            <input type="text" id="usernameInput" placeholder="Username" class="w-full brutal-border p-3 mb-4 rounded bg-white text-black font-bold">
+            <input type="password" id="passwordInput" placeholder="Password" class="w-full brutal-border p-3 mb-6 rounded bg-white text-black font-bold">
+            <div class="flex gap-4">
+                <button onclick="handleLogin()" class="brutal-btn bg-nbrand-yellow text-black flex-1">Login</button>
+                <button onclick="closeModal('loginModal')" class="brutal-btn bg-white text-black flex-1">Cancel</button>
+            </div>
+            <p id="loginError" class="text-red-600 font-black mt-4 hidden bg-white border-2 border-red-600 p-2 text-center rounded">Incorrect credentials!</p>
+        </div>
+    </div>
+
+    <div id="extendedAboutModal" class="fixed inset-0 bg-grid-pattern z-[65] hidden flex-col overflow-y-auto p-4 md:p-8 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto w-full space-y-8 mt-4 pb-12">
+            <button onclick="closeExtendedAbout()" class="brutal-btn bg-nbrand-yellow text-black self-start inline-flex mb-4">
+                <i class="ph-bold ph-arrow-left text-xl"></i> Back
+            </button>
+
+            <div class="brutal-card bg-white dark:bg-zinc-800 p-8 md:p-12">
+                <h2 class="text-4xl font-black uppercase mb-6 flex items-center gap-3 text-nbrand-blue brutal-stroke dark:text-white" style="text-shadow: 2px 2px 0px #000;">
+                    <i class="ph-fill ph-user-circle"></i>
+                    Full Profile
+                </h2>
+                
+                <div id="extAboutMeContent" class="text-lg font-medium leading-relaxed mb-8 outline-none rounded-xl transition-all duration-300 p-2 -ml-2">
+                    <p class="mb-4">
+                        I'm a developer obsessed with creating web experiences that aren't boring. I specialize in React, Node.js, and chaotic good design principles (as you can tell). 
+                    </p>
+                    <p>
+                        When I'm not writing code, I'm probably optimizing my mechanical keyboard switches, drinking too much iced coffee, or trying to convince people that CSS is a real programming language.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8 flex items-center gap-2">
+                    <i class="ph-fill ph-airplane-tilt"></i> Currently in Flight School
+                </h3>
+                <div id="flightSchoolContent" class="text-lg font-medium leading-relaxed mb-8 outline-none rounded-xl transition-all duration-300 p-2 -ml-2">
+                    <p>
+                        When I'm not writing code, I'm taking to the skies! I am currently working towards my pilot's license. Learning to fly has been an incredible journey that demands the same focus and problem-solving skills as engineering.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8 flex items-center gap-2">
+                    <i class="ph-fill ph-medal"></i> Track & Field
+                </h3>
+                <div id="extAthleticsContent" class="text-lg font-medium leading-relaxed mb-8 outline-none rounded-xl transition-all duration-300 p-2 -ml-2">
+                    <p>
+                        I'm a competitive track and field athlete. Balancing rigorous training with coding and flight school has taught me discipline, endurance, and how to constantly push my limits. Check out my stats and PRs on my Athletic.net profile!
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2">Tech Stack</h3>
+                <div id="extTechStack" class="flex flex-wrap gap-2 mb-12 outline-none rounded-xl transition-all duration-300 p-2 -ml-2">
+                    <span class="brutal-tag">Full Stack HTML</span>
+                    <span class="brutal-tag">PY</span>
+                    <span class="brutal-tag">Cloudflare</span>
+                    <span class="brutal-tag">Emailjs</span>
+                    <span class="brutal-tag">Claude</span>
+                    <span class="brutal-tag">Gemni</span>
+                    <span class="brutal-tag">openstreetmap</span>
+                    <span class="brutal-tag">Vercel</span>
+                    <span class="brutal-tag">Groq</span>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">Favorite Design Styles</h3>
+                <div id="extDesignStyles" class="flex flex-wrap gap-3 mb-12 transform rotate-1 outline-none rounded-xl transition-all duration-300 p-2 -ml-2">
+                    <span class="brutal-tag bg-nbrand-pink text-black dark:text-black hover:-translate-y-1 transition-transform">Neo-Brutalism</span>
+                    <span class="brutal-tag bg-nbrand-blue text-black dark:text-black hover:-translate-y-1 transition-transform">Glassmorphism</span>
+                    <span class="brutal-tag bg-nbrand-yellow text-black dark:text-black hover:-translate-y-1 transition-transform">Skeuomorphism</span>
+                    <span class="brutal-tag bg-nbrand-green text-black dark:text-black hover:-translate-y-1 transition-transform">Neumorphism</span>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">Education Journey</h3>
+                <div id="extEduJourney" class="bg-nbrand-pink p-4 brutal-border shadow-sm font-bold text-xl mb-12 transform -rotate-1 text-black outline-none rounded-xl transition-all duration-300">
+                    Yinghua academy <span class="mx-2 text-white brutal-stroke">></span> Minnetonka High school <span class="mx-2 text-white brutal-stroke">></span> .?.?
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-4 border-black dark:border-white pb-2 mt-8 mb-4 gap-4">
+                    <h3 class="text-2xl font-black uppercase flex items-center gap-2 m-0">
+                        <i class="ph-fill ph-file-text"></i> Interactive Resume
+                    </h3>
+                    <a href="#" download class="brutal-btn bg-nbrand-green text-black py-2 px-4 text-sm whitespace-nowrap">
+                        <i class="ph-bold ph-download-simple"></i> Download Resume
+                    </a>
+                </div>
+                
+                <div id="resumeContent" class="space-y-6 outline-none rounded-xl transition-all duration-300 p-2 -ml-2 mb-12">
+                    <div class="border-l-4 border-nbrand-purple pl-4">
+                        <h4 class="font-black text-xl mb-1 text-nbrand-purple">Experience</h4>
+                        <p class="text-gray-700 dark:text-gray-300 font-medium">[ Currently empty - Click Edit to add experience ]</p>
+                    </div>
+                    <div class="border-l-4 border-nbrand-blue pl-4">
+                        <h4 class="font-black text-xl mb-1 text-nbrand-blue">Notable Projects</h4>
+                        <p class="text-gray-700 dark:text-gray-300 font-medium">[ Currently empty - Click Edit to add projects ]</p>
+                    </div>
+                    <div class="border-l-4 border-nbrand-orange pl-4">
+                        <h4 class="font-black text-xl mb-1 text-nbrand-orange">Certifications</h4>
+                        <p class="text-gray-700 dark:text-gray-300 font-medium">[ Currently empty - Click Edit to add certifications ]</p>
+                    </div>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">Base of Operations</h3>
+                <div class="w-full h-[350px] brutal-border brutal-shadow-sm bg-gray-200 overflow-hidden relative transform rotate-1">
+                    <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.openstreetmap.org/export/embed.html?bbox=-93.4116%2C44.8902%2C-93.1367%2C45.0513&amp;layer=mapnik&amp;marker=44.9778%2C-93.2650" style="border: 0;"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opened Sites Modal -->
+    <div id="openedSitesModal" class="fixed inset-0 bg-grid-pattern z-[65] hidden flex-col overflow-y-auto p-4 md:p-8 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto w-full space-y-8 mt-4 pb-12">
+            <button onclick="closeOpenedSites()" class="brutal-btn bg-nbrand-yellow text-black self-start inline-flex mb-4">
+                <i class="ph-bold ph-arrow-left text-xl"></i> Back
+            </button>
+
+            <div class="brutal-card bg-white dark:bg-zinc-800 p-8 md:p-12">
+                <h2 class="text-4xl font-black uppercase mb-6 flex items-center gap-3 text-nbrand-blue brutal-stroke dark:text-white" style="text-shadow: 2px 2px 0px #000;">
+                    <i class="ph-fill ph-globe"></i>
+                    Opened Sites
+                </h2>
+                
+                <p class="text-lg font-medium mb-8 text-black dark:text-white">
+                    A collection of active projects and deployed domains running in the wild.
+                </p>
+
+                <!-- Admin: Add New Site Form -->
+                <form id="addSiteForm" class="hidden flex-col gap-4 mb-12 border-4 border-dashed border-black dark:border-white p-6 bg-nbrand-blue/10 rounded-xl" onsubmit="submitOpenedSite(event)">
+                    <h3 class="text-xl font-bold uppercase tracking-widest text-nbrand-blue">Admin: Add New Site</h3>
+                    <input type="text" id="siteName" placeholder="Site Name" required class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white">
+                    <input type="url" id="siteUrl" placeholder="URL (e.g. https://...)" required class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white">
+                    <textarea id="siteDesc" placeholder="Description" required class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white"></textarea>
+                    <button type="submit" class="brutal-btn bg-nbrand-yellow text-black self-start">Add Site <i class="ph-bold ph-plus"></i></button>
+                </form>
+
+                <div id="openedSitesList" class="space-y-6">
+                    <!-- Dynamic Site List -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guestbook Modal -->
+    <div id="guestbookModal" class="fixed inset-0 bg-grid-pattern z-[65] hidden flex-col overflow-y-auto p-4 md:p-8 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto w-full space-y-8 mt-4 pb-12">
+            <button onclick="closeGuestbook()" class="brutal-btn bg-nbrand-yellow text-black self-start inline-flex mb-4">
+                <i class="ph-bold ph-arrow-left text-xl"></i> Back
+            </button>
+
+            <div class="brutal-card bg-white dark:bg-zinc-800 p-8 md:p-12">
+                <div class="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
+                    <h2 class="text-4xl font-black uppercase flex items-center gap-3 text-nbrand-pink brutal-stroke dark:text-white m-0" style="text-shadow: 2px 2px 0px #000;">
+                        <i class="ph-fill ph-book-open-text"></i>
+                        Guestbook
+                    </h2>
+                    <button onclick="openGuestbookHow()" class="text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors underline decoration-2 underline-offset-4 decoration-nbrand-pink hover:decoration-nbrand-yellow">
+                        How this works
+                    </button>
+                </div>
+                
+                <p class="text-lg font-medium mb-8 text-black dark:text-white">
+                    Leave your mark on the edge. Sign the guestbook to flex that you were here.
+                </p>
+
+                <form id="guestbookForm" class="flex flex-col gap-4 relative z-10 mb-12" onsubmit="submitGuestbook(event)">
+                    <div class="flex gap-4">
+                        <input type="text" id="gbName" placeholder="Hacker Name" required maxlength="20" class="flex-1 brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white focus:outline-none focus:ring-4 focus:ring-nbrand-pink transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                        <button type="submit" class="brutal-btn bg-nbrand-yellow text-black whitespace-nowrap">
+                            Sign <i class="ph-bold ph-pen-nib"></i>
+                        </button>
+                    </div>
+                    <input type="text" id="gbMessage" placeholder="Leave a vibe..." required maxlength="80" class="w-full brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white focus:outline-none focus:ring-4 focus:ring-nbrand-pink transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                </form>
+
+                <h3 class="text-2xl font-black uppercase mb-6 border-b-4 border-black dark:border-white pb-2 text-black dark:text-white">Signatures</h3>
+                <div id="guestbookEntries" class="space-y-4">
+                    <!-- Entries rendered here via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guestbook "How It Works" Modal -->
+    <div id="guestbookHowModal" class="fixed inset-0 bg-black/90 z-[70] hidden flex-col items-center justify-center p-4 md:p-8 backdrop-blur-md">
+        <div class="brutal-card p-8 max-w-2xl w-full bg-nbrand-pink transform transition-transform duration-300 scale-95" id="guestbookHowCard">
+            <button onclick="closeGuestbookHow()" class="brutal-btn bg-white text-black self-start inline-flex mb-6">
+                <i class="ph-bold ph-arrow-left text-xl"></i> Back
+            </button>
+            <h2 class="text-3xl font-black mb-4 uppercase text-black">Guestbook Logic</h2>
+            <p class="text-black font-medium mb-6 bg-white p-4 brutal-border">
+                When you sign the guestbook, the frontend grabs the current JSON array directly from the Cloudflare Worker, adds your new signature to the top, and fires an instant POST request to rewrite the KV storage. 
+            </p>
+            <div class="relative bg-zinc-900 rounded-xl brutal-border overflow-hidden mb-6">
+                <div class="absolute top-0 left-0 w-full bg-zinc-800 px-4 py-2 border-b-2 border-zinc-700 flex gap-2 items-center">
+                    <span class="text-xs font-mono text-zinc-400">frontend-api.js</span>
+                </div>
+                <pre class="p-6 pt-12 overflow-x-auto text-sm font-mono text-green-400 leading-relaxed text-left whitespace-pre"><code>// Optimistic Rendering
+guestbookData.unshift(newEntry);
+if (guestbookData.length > 50) guestbookData.pop();
+
+// Fetch latest data to prevent overwriting
+const res = await fetch(WORKER_URL);
+const current = await res.json();
+const payload = current.data || {};
+
+// Inject new array and save to Edge
+payload.guestbook = guestbookData;
+await fetch(WORKER_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload)
+});</code></pre>
+            </div>
+            <button onclick="closeGuestbookHow()" class="brutal-btn bg-black text-white w-full">Got it <i class="ph-bold ph-thumbs-up"></i></button>
+        </div>
+    </div>
+
+    <!-- How It Works Modal -->
+    <div id="howItWorksModal" class="fixed inset-0 bg-grid-pattern z-[65] hidden flex-col overflow-y-auto p-4 md:p-8 transition-colors duration-300">
+        <div class="max-w-4xl mx-auto w-full space-y-8 mt-4 pb-12">
+            <button onclick="closeHowItWorks()" class="brutal-btn bg-nbrand-yellow text-black self-start inline-flex mb-4">
+                <i class="ph-bold ph-arrow-left text-xl"></i> Back
+            </button>
+
+            <div class="brutal-card bg-white dark:bg-zinc-800 p-8 md:p-12">
+                <h2 class="text-4xl font-black uppercase mb-6 flex items-center gap-3 text-nbrand-orange brutal-stroke dark:text-white" style="text-shadow: 2px 2px 0px #000;">
+                    <i class="ph-fill ph-gear"></i>
+                    Under the Hood
+                </h2>
+                
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">Tech Stack</h3>
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <span class="brutal-tag">HTML5</span>
+                    <span class="brutal-tag">Tailwind CSS</span>
+                    <span class="brutal-tag">Vanilla JS</span>
+                    <span class="brutal-tag">Cloudflare Workers</span>
+                    <span class="brutal-tag">Cloudflare KV</span>
+                    <span class="brutal-tag">EmailJS</span>
+                    <span class="brutal-tag">DummyJSON API</span>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">How Cloudflare Works</h3>
+                <div class="text-lg font-medium leading-relaxed mb-8">
+                    <p class="mb-4">
+                        This site doesn't use a traditional database or server like Node.js + MongoDB. Instead, it relies on <strong>Cloudflare Workers</strong> and <strong>Cloudflare KV</strong> (Key-Value storage) to operate entirely at the "Edge" (the network of servers closest to you).
+                    </p>
+                    <p class="mb-4">
+                        When you view this page, it makes a simple <code>GET</code> request to a serverless API (the Worker). The Worker reads the latest edits and the global hit count from the ultra-fast KV store, updates the visit count instantly, and sends the content back to your browser. 
+                    </p>
+                    <p>
+                        When the admin logs in and edits the page, a <code>POST</code> request sends the new HTML blocks back to the Worker, overwriting the KV storage so the next visitor instantly sees the updated site.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 mt-8">Backend Worker Code</h3>
+                <div class="relative bg-zinc-900 rounded-xl brutal-border overflow-hidden group mb-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]">
+                    <div class="absolute top-0 left-0 w-full bg-zinc-800 px-4 py-2 border-b-2 border-zinc-700 flex gap-2 items-center">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <span class="ml-2 text-xs font-mono text-zinc-400">worker.js</span>
+                    </div>
+                    <pre class="p-6 pt-14 overflow-x-auto text-sm font-mono text-green-400 leading-relaxed text-left whitespace-pre"><code>export default {
+  async fetch(request, env, ctx) {
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    if (request.method === "OPTIONS") {
+      return new Response(null, { headers: corsHeaders });
+    }
+
+    if (!env.PORTFOLIO_DB) {
+      return new Response(
+        JSON.stringify({ error: "KV DB not bound!" }), 
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
+    try {
+      if (request.method === "GET") {
+        let hits = parseInt(await env.PORTFOLIO_DB.get("page_hits")) || 0;
+        hits += 1;
+        ctx.waitUntil(env.PORTFOLIO_DB.put("page_hits", hits.toString()));
+
+        const rawData = await env.PORTFOLIO_DB.get("site_data");
+        const data = rawData ? JSON.parse(rawData) : {};
+        
+        return new Response(JSON.stringify({ data: data, hits: hits }), {
+          headers: { ...corsHeaders, "Content-Type": "application/json" }
+        });
+      }
+
+      if (request.method === "POST") {
+        const body = await request.text();
+        await env.PORTFOLIO_DB.put("site_data", body);
+        return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+      }
+
+      return new Response("Not found", { status: 404, headers: corsHeaders });
+    } catch (err) {
+      return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
+    }
+  }
+};</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Iframe Preview Modal -->
+    <div id="iframeModal" class="fixed inset-0 bg-black/80 z-[70] hidden flex-col items-center justify-center p-4 md:p-8 backdrop-blur-sm">
+        <div class="brutal-card w-full max-w-6xl h-full md:h-[85vh] bg-nbrand-pink transform transition-transform duration-300 scale-95 flex flex-col" id="iframeCard">
+            <div class="flex justify-between items-center p-4 border-b-4 border-black dark:border-white bg-white dark:bg-zinc-800">
+                <h2 id="iframeTitle" class="text-xl font-black uppercase text-black dark:text-white truncate pr-4">Preview</h2>
+                <button onclick="closeIframe()" class="brutal-btn bg-nbrand-yellow text-black py-2 px-4 flex-shrink-0"><i class="ph-bold ph-x"></i> Close</button>
+            </div>
+            <div class="flex-1 w-full bg-white relative">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <i class="ph-bold ph-spinner animate-spin text-4xl text-gray-400"></i>
+                </div>
+                <iframe id="previewIframe" class="w-full h-full relative z-10 bg-transparent" src="" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Item Modal -->
+    <div id="addItemModal" class="fixed inset-0 bg-black/80 z-[60] hidden flex-col items-center justify-center p-4 backdrop-blur-sm">
+        <div class="brutal-card p-8 max-w-md w-full bg-nbrand-blue transform transition-transform duration-300 scale-95" id="addItemCard">
+            <h2 id="addModalTitle" class="text-2xl font-black mb-4 uppercase text-white brutal-stroke">Add Item</h2>
+            <input type="text" id="itemTitle" placeholder="Project Title" class="w-full brutal-border p-3 mb-4 rounded bg-white text-black font-bold">
+            <textarea id="itemDesc" placeholder="Description" class="w-full brutal-border p-3 mb-4 rounded bg-white text-black font-bold h-24"></textarea>
+            <input type="text" id="itemTags" placeholder="Tags (comma separated)" class="w-full brutal-border p-3 mb-4 rounded bg-white text-black font-bold">
+            <input type="text" id="itemLink" placeholder="URL Link (optional)" class="w-full brutal-border p-3 mb-4 rounded bg-white text-black font-bold">
+            <input type="text" id="itemPreview" placeholder="Live Preview URL (optional)" class="w-full brutal-border p-3 mb-6 rounded bg-white text-black font-bold">
+            <div class="flex gap-4">
+                <button onclick="submitNewItem()" class="brutal-btn bg-nbrand-yellow text-black flex-1">Add</button>
+                <button onclick="closeModal('addItemModal')" class="brutal-btn bg-white text-black flex-1">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Menu Button -->
+    <button id="menuBtn" class="fixed top-6 right-6 z-50 w-14 h-14 bg-nbrand-yellow text-black brutal-border brutal-shadow-sm rounded-full flex items-center justify-center hover:scale-110 hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)] transition-all duration-300 animate-float">
+        <i id="menuIcon" class="ph-bold ph-list text-3xl"></i>
+    </button>
+
+    <!-- Slide-out Navigation Panel -->
+    <div id="navPanel" class="fixed top-0 right-0 h-full w-full sm:w-80 bg-[#FFCBA4]/90 dark:bg-zinc-900/90 backdrop-blur-md border-l-4 border-black dark:border-white z-40 transform translate-x-full transition-transform duration-300 ease-in-out shadow-[-8px_0px_0px_0px_rgba(0,0,0,1)] dark:shadow-[-8px_0px_0px_0px_rgba(255,255,255,1)] flex flex-col p-8 pt-28 gap-4 overflow-y-auto">
+        <h2 class="text-2xl font-black uppercase mb-4 border-b-4 border-black dark:border-white pb-2 text-black dark:text-white">Menu</h2>
+        
+        <!-- Systems Configuration Block -->
+        <div class="mb-4 bg-white/20 dark:bg-black/20 p-4 border-2 border-white/50 dark:border-white/10 rounded-xl shadow-sm backdrop-blur-md">
+            <h3 class="font-black uppercase text-xs text-gray-700 dark:text-gray-400 mb-3 tracking-widest">Systems Dashboard</h3>
+            <button onclick="toggleTheme()" class="w-full text-left font-bold uppercase py-2 flex justify-between items-center text-black dark:text-white hover:text-nbrand-pink transition-colors">
+                Theme <i id="themeIcon" class="ph-bold ph-moon text-xl"></i>
+            </button>
+            <button onclick="toggleSound()" class="w-full text-left font-bold uppercase py-2 flex justify-between items-center text-black dark:text-white hover:text-nbrand-pink transition-colors border-t border-black/10 dark:border-white/10 mt-1 pt-3">
+                Key Sounds <i id="soundIcon" class="ph-bold ph-speaker-slash text-xl"></i>
+            </button>
+            <button onclick="toggleCursor()" class="w-full text-left font-bold uppercase py-2 flex justify-between items-center text-black dark:text-white hover:text-nbrand-pink transition-colors border-t border-black/10 dark:border-white/10 mt-1 pt-3">
+                Pro Cursor <i id="cursorIcon" class="ph-bold ph-mouse-pointer text-xl"></i>
+            </button>
+        </div>
+
+        <a href="javascript:void(0)" onclick="openOpenedSites(); toggleMenu()" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white flex items-center justify-between">Opened Sites <i class="ph-bold ph-globe"></i></a>
+        <a href="javascript:void(0)" onclick="openGuestbook(); toggleMenu()" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white flex items-center justify-between mt-4">Guestbook <i class="ph-bold ph-book-open-text"></i></a>
+        <a href="#about" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white mt-4">About Me</a>
+        <a href="#projects" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white">Recent Drops</a>
+        <a href="#lab" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white">In The Lab</a>
+        <a href="#email" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white">Send Me an Email</a>
+        <a href="#connect" class="nav-link text-xl font-bold uppercase hover:bg-white/40 dark:hover:bg-black/40 px-4 py-3 border-2 border-white/50 bg-white/20 dark:bg-black/20 shadow-sm backdrop-blur-md rounded-xl transition-all text-black dark:text-white">Hit Me Up</a>
+        
+        <button id="signInBtn" onclick="openLoginModal()" class="text-left nav-link text-xl font-bold uppercase hover:-translate-y-1 px-4 py-3 brutal-border brutal-shadow-sm rounded-xl transition-all bg-nbrand-yellow text-black mt-4 flex items-center justify-between">
+            Sign In <i class="ph-bold ph-lock-key"></i>
+        </button>
+        <button id="signOutBtn" onclick="handleSignOut()" class="hidden text-left nav-link text-xl font-bold uppercase hover:-translate-y-1 px-4 py-3 brutal-border brutal-shadow-sm rounded-xl transition-all bg-red-500 text-white mt-4 flex items-center justify-between">
+            Sign Out <i class="ph-bold ph-sign-out"></i>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto mt-12 space-y-12 pb-12">
+        
+        <header class="flex flex-col md:flex-row gap-6 md:gap-8 items-stretch relative reveal-on-scroll">
+            <div class="absolute -top-6 -left-6 z-20 animate-spin-slow pointer-events-none hidden md:block">
+                <i class="ph-fill ph-star-four text-6xl text-nbrand-yellow brutal-stroke"></i>
+            </div>
+
+            <div class="relative mx-auto md:mx-0 z-10 group flex items-center justify-center">
+                <div class="w-40 h-40 md:w-56 md:h-56 brutal-border brutal-shadow rounded-full bg-white flex-shrink-0 overflow-hidden relative">
+                    <img src="./IMG_0904.jpeg" alt="Profile Avatar" onerror="this.onerror=null;this.src='https://api.dicebear.com/7.x/fun-emoji/svg?seed=Sawyer&backgroundColor=FF90E8';" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                </div>
+                
+                <a href="https://genjutsu-social.vercel.app/u/uknow2" target="_blank" rel="noopener noreferrer" class="absolute left-[75%] md:left-[85%] top-1/2 -translate-y-1/2 z-30 glass-panel px-4 py-2 flex items-center gap-2 text-black dark:text-white font-black hover:scale-110 hover:bg-white/60 dark:hover:bg-white/20 transition-all animate-float whitespace-nowrap">
+                    <i class="ph-fill ph-shooting-star text-nbrand-purple text-xl animate-pulse"></i> Genjutsu
+                </a>
+            </div>
+            
+            <div class="brutal-card bg-nbrand-purple flex-1 flex flex-col justify-center p-8 text-white relative overflow-hidden group md:ml-4">
+                <div class="absolute -right-10 -bottom-10 opacity-20 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125">
+                    <i class="ph-fill ph-code block text-[200px]"></i>
+                </div>
+
+                <div class="absolute top-4 right-4 bg-white dark:bg-black text-black dark:text-white font-black text-xs px-3 py-1 brutal-border rounded-full transform rotate-12 animate-wiggle shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] z-20">
+                    100% CODE
+                </div>
+
+                <div class="relative z-10">
+                    <div class="inline-block bg-nbrand-yellow text-black font-bold px-3 py-1 brutal-border rounded-lg mb-4 text-sm uppercase transform -rotate-2 hover:rotate-0 transition-transform">
+                        Hello World, I'm #udnowknow
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black uppercase leading-none mb-2 tracking-tight transition-transform duration-300 hover:scale-105 hover:-translate-y-2 brutal-stroke origin-left" style="text-shadow: 4px 4px 0px #FF90E8;">
+                        Sawyer<br>Schulz
+                    </h1>
+                    <p class="text-xl md:text-2xl font-bold glass-panel inline-block px-3 py-1 mt-2 transform rotate-1 text-black dark:text-white border-white/50 shadow-sm backdrop-blur-md">
+                        D1 committed Vibe Coder
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- About Me Section -->
+        <section id="about" class="brutal-card bg-white dark:bg-zinc-800 p-8 reveal-on-scroll transform hover:-rotate-1 transition-transform duration-500 relative">
+            <h2 class="text-3xl font-black uppercase mb-6 flex items-center gap-3">
+                <i class="ph-fill ph-user-circle text-nbrand-blue"></i>
+                About Me
+            </h2>
+            <div id="aboutMeContent" class="text-lg font-medium leading-relaxed max-w-3xl rounded-xl transition-all duration-300 outline-none p-2 -ml-2">
+                <p class="mb-4">
+                    I'm a developer obsessed with creating web experiences that aren't boring. I specialize in React, Node.js, and chaotic good design principles (as you can tell). 
+                </p>
+                <p>
+                    When I'm not writing code, I'm probably optimizing my mechanical keyboard switches, drinking too much iced coffee, or trying to convince people that CSS is a real programming language.
+                </p>
+            </div>
+            
+            <div class="mt-8">
+                <button onclick="openExtendedAbout()" class="brutal-btn bg-nbrand-purple text-white">
+                    <i class="ph-bold ph-arrows-out-simple"></i> Read Full Bio
+                </button>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <section id="projects" class="space-y-6 reveal-on-scroll relative">
+                <h2 class="text-3xl font-black uppercase flex items-center gap-3 glass-panel inline-block px-4 py-2 transform -rotate-1 text-black dark:text-white">
+                    <i class="ph-fill ph-lightning text-nbrand-yellow animate-pulse"></i>
+                    Recent Drops
+                </h2>
+
+                <div id="projectsGrid" class="space-y-6">
+                    <div class="brutal-card group hover:-translate-y-2 transition-transform duration-300 relative transform -rotate-1 hover:rotate-0 z-10 hover:z-20">
+                        <div class="absolute -left-2 -top-2 bg-nbrand-yellow brutal-border px-2 py-1 text-xs font-black text-black transform -rotate-12 z-10 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] animate-wiggle">HOT</div>
+                        <div class="h-40 bg-nbrand-blue border-b-4 border-black dark:border-white relative overflow-hidden flex items-center justify-center p-6">
+                            <i class="ph-fill ph-activity text-7xl text-white group-hover:scale-150 group-hover:rotate-12 transition-all duration-500"></i>
+                        </div>
+                        <div class="p-6 bg-white dark:bg-zinc-800">
+                            <h3 class="text-2xl font-bold mb-2">Genjustsu Live Feed</h3>
+                            <p class="text-gray-700 dark:text-gray-300 font-medium mb-4">A dynamic live feed application pulling real-time data.</p>
+                            <div class="flex justify-between items-end">
+                                <div class="flex gap-2">
+                                    <span class="brutal-tag">Live</span>
+                                    <span class="brutal-tag">Data</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="openIframe('Genjustsu Live Feed', 'https://genjustsu-feed.edgeone.app/')" class="h-10 px-4 brutal-border bg-nbrand-green text-black font-bold text-sm uppercase rounded-xl flex items-center justify-center hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+                                        <i class="ph-bold ph-eye mr-2"></i> Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brutal-card group hover:-translate-y-2 transition-transform duration-300 relative transform rotate-1 hover:rotate-0 z-10 hover:z-20">
+                        <div class="h-40 bg-nbrand-green border-b-4 border-black dark:border-white relative overflow-hidden flex items-center justify-center p-6">
+                            <i class="ph-fill ph-desktop text-7xl text-white group-hover:scale-150 group-hover:-rotate-12 transition-all duration-500"></i>
+                        </div>
+                        <div class="p-6 bg-white dark:bg-zinc-800">
+                            <h3 class="text-2xl font-bold mb-2">Sliky Os</h3>
+                            <p class="text-gray-700 dark:text-gray-300 font-medium mb-4">A fun, quirky web-based operating system experiment.</p>
+                            <div class="flex justify-between items-end">
+                                <div class="flex gap-2">
+                                    <span class="brutal-tag">OS</span>
+                                    <span class="brutal-tag">Web</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="openIframe('Sliky Os', 'https://workdock.edgeone.app/')" class="h-10 px-4 brutal-border bg-nbrand-green text-black font-bold text-sm uppercase rounded-xl flex items-center justify-center hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+                                        <i class="ph-bold ph-eye mr-2"></i> Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="brutal-card group hover:-translate-y-2 transition-transform duration-300 relative transform -rotate-2 hover:rotate-0 z-10 hover:z-20">
+                        <div class="h-40 bg-nbrand-purple border-b-4 border-black dark:border-white relative overflow-hidden flex items-center justify-center p-6">
+                            <i class="ph-fill ph-link text-7xl text-white group-hover:scale-150 group-hover:rotate-12 transition-all duration-500"></i>
+                        </div>
+                        <div class="p-6 bg-white dark:bg-zinc-800">
+                            <h3 class="text-2xl font-bold mb-2">URL Save</h3>
+                            <p class="text-gray-700 dark:text-gray-300 font-medium mb-4">A handy utility for saving and managing your favorite web links.</p>
+                            <div class="flex justify-between items-end">
+                                <div class="flex gap-2">
+                                    <span class="brutal-tag">Tools</span>
+                                    <span class="brutal-tag">Utility</span>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="openIframe('URL Save', 'https://url-save.edgeone.app/')" class="h-10 px-4 brutal-border bg-nbrand-green text-black font-bold text-sm uppercase rounded-xl flex items-center justify-center hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all">
+                                        <i class="ph-bold ph-eye mr-2"></i> Preview
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <a href="https://github.com/sawyerbobk563-code" target="_blank" rel="noopener noreferrer" class="brutal-btn glass-btn text-black dark:text-white w-full border-black dark:border-white">
+                        <i class="ph-bold ph-github-logo text-xl"></i> View More on GitHub
+                    </a>
+                </div>
+            </section>
+
+            <div class="space-y-12">
+                
+                <section id="lab" class="space-y-6 reveal-on-scroll relative">
+                    <h2 class="text-3xl font-black uppercase flex items-center gap-3 glass-panel inline-block px-4 py-2 transform rotate-1 text-black dark:text-white">
+                        <i class="ph-fill ph-crane text-nbrand-orange animate-wiggle"></i>
+                        In The Lab
+                    </h2>
+
+                    <div id="labGrid" class="space-y-6">
+                        <div class="glass-panel p-6 relative overflow-hidden group transform rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-300">
+                            <div class="absolute top-4 right-4 bg-black text-white dark:bg-white dark:text-black text-xs font-bold px-2 py-1 uppercase rounded-md animate-pulse">
+                                WIP
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                                <i class="ph-bold ph-browser text-2xl"></i> Full HTML Web Browser
+                            </h3>
+                            <p class="text-gray-800 dark:text-gray-200 font-medium text-sm">
+                                Building a completely custom web browser UI using HTML, CSS, and JS. It's a massive challenge but coming together perfectly.
+                            </p>
+                        </div>
+
+                        <div class="glass-panel p-6 relative group transform -rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-300">
+                            <div class="absolute top-4 right-4 bg-black text-white dark:bg-white dark:text-black text-xs font-bold px-2 py-1 uppercase rounded-md animate-pulse">
+                                Planning
+                            </div>
+                            <h3 class="text-xl font-bold mb-2 flex items-center gap-2">
+                                <i class="ph-bold ph-paint-brush text-2xl"></i> Brutalist UI Library
+                            </h3>
+                            <p class="text-gray-800 dark:text-gray-200 font-medium text-sm">
+                                Packaging all these components into an open-source React component library for the masses.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="email" class="brutal-card bg-nbrand-purple p-8 relative overflow-hidden transform rotate-1 hover:rotate-0 transition-all duration-500 reveal-on-scroll group">
+                    <i class="ph-fill ph-paper-plane text-[150px] absolute -right-10 -top-10 opacity-20 transform -rotate-12 group-hover:translate-x-4 group-hover:-translate-y-4 transition-transform duration-500 pointer-events-none text-white"></i>
+                    
+                    <h2 class="text-3xl font-black uppercase mb-6 relative z-10 text-white brutal-stroke" style="text-shadow: 2px 2px 0px #000;">
+                        ✉️ Send Me An Email
+                    </h2>
+                    <p class="font-medium mb-6 relative z-10 brutal-border bg-white dark:bg-zinc-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] inline-block p-3 text-sm transform -rotate-1 text-black dark:text-white">
+                        Shoot me a message and it will go directly to my inbox!
+                    </p>
+
+                    <form id="emailForm" class="flex flex-col gap-4 relative z-10">
+                        <input type="text" name="from_name" placeholder="Your Name" required class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-nbrand-yellow transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1">
+                        <input type="email" name="reply_to" placeholder="Your Email" required class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-nbrand-yellow transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1">
+                        <textarea name="message" placeholder="What's up?..." required rows="4" class="brutal-border p-3 rounded-xl font-bold bg-white dark:bg-zinc-700 text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-4 focus:ring-nbrand-yellow transition-all shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] hover:-translate-y-1"></textarea>
+                        
+                        <button type="submit" id="submitEmailBtn" class="brutal-btn bg-nbrand-yellow text-black self-start mt-2">
+                            Send Message <i class="ph-bold ph-paper-plane-tilt group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                        </button>
+                    </form>
+                </section>
+
+                <section id="connect" class="brutal-card bg-nbrand-pink p-8 relative overflow-hidden reveal-on-scroll group">
+                    <i class="ph-fill ph-smiley text-[150px] absolute -right-10 -top-10 opacity-20 transform rotate-12 group-hover:rotate-[24deg] group-hover:scale-110 transition-transform duration-500 pointer-events-none"></i>
+                    
+                    <h2 class="text-3xl font-black uppercase mb-6 relative z-10 text-black">
+                        🤝 Hit Me Up
+                    </h2>
+                    <p class="font-medium mb-6 relative z-10 glass-panel inline-block p-3 transform -rotate-1 text-black border-black/10">
+                        Have a project in mind, want to collaborate, or just want to yell at me about my CSS choices?
+                    </p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 relative z-10">
+                        <a href="mailto:sawyerbobk563@gmail.com" class="brutal-btn bg-white dark:bg-zinc-800 text-black dark:text-white hover:scale-105 transform hover:-rotate-2">
+                            <i class="ph-bold ph-envelope-simple text-xl"></i> Email
+                        </a>
+                        <a href="https://github.com/sawyerbobk563-code" target="_blank" rel="noopener noreferrer" class="brutal-btn bg-[#FC4C02] text-white hover:scale-105 transform hover:rotate-2">
+                            <i class="ph-bold ph-person-simple-run text-xl"></i> Strava
+                        </a>
+                        <a href="https://genjutsu-social.vercel.app/u/uknow2" target="_blank" rel="noopener noreferrer" class="brutal-btn glass-panel border-black dark:border-white text-black dark:text-white hover:scale-105 transform hover:rotate-1 !bg-white/20 dark:!bg-black/20">
+                            <i class="ph-fill ph-shooting-star text-nbrand-purple text-xl animate-pulse"></i> Genjutsu
+                        </a>
+                        <a href="https://github.com/sawyerbobk563-code" target="_blank" rel="noopener noreferrer" class="brutal-btn bg-[#333] dark:bg-zinc-700 text-white hover:scale-105 transform hover:-rotate-1">
+                            <i class="ph-bold ph-github-logo text-xl"></i> GitHub
+                        </a>
+                        <a href="https://www.athletic.net/athlete/29503644/track-and-field/all" target="_blank" rel="noopener noreferrer" class="brutal-btn bg-[#182B49] text-white hover:scale-105 transform hover:rotate-1">
+                            <i class="ph-bold ph-medal text-xl"></i> Athletic.net
+                        </a>
+                        <a href="#" class="brutal-btn bg-[#0077b5] text-white hover:scale-105 transform hover:rotate-2">
+                            <i class="ph-bold ph-linkedin-logo text-xl"></i> LinkedIn
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Custom Admin Sections Will Append Here -->
+        <div id="customSectionsContainer"></div>
+
+    </main>
+
+    <div class="flex flex-col items-center mt-12 mb-4 reveal-on-scroll">
+        <div class="inline-block brutal-border bg-black text-[#00ff00] font-mono text-2xl p-3 px-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transform rotate-1 hover:rotate-0 hover:scale-110 transition-all cursor-default" title="Page Visits">
+            <span class="text-[10px] uppercase block text-center text-white mb-1 tracking-widest font-sans">Page Visits</span>
+            <span id="hitCounter" class="tracking-[0.2em] font-black" style="text-shadow: 0 0 5px #00ff00;">...</span>
+        </div>
+        <button onclick="openHowItWorks()" class="mt-4 text-sm font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors underline decoration-2 underline-offset-4 decoration-nbrand-pink hover:decoration-nbrand-yellow">
+            How this works
+        </button>
+    </div>
+
+    <section class="max-w-4xl mx-auto mt-12 mb-8 reveal-on-scroll px-4 sm:px-8">
+        <div class="glass-panel p-8 relative overflow-hidden text-center group border-white/60 dark:border-white/20">
+            <div id="quoteTimerBar" class="absolute bottom-0 left-0 h-2 bg-nbrand-pink w-0 z-20"></div>
+
+            <div class="absolute -top-6 -left-4 text-9xl text-black/5 dark:text-white/5 font-serif transform -rotate-12 group-hover:rotate-0 transition-transform duration-500">"</div>
+            <div class="absolute -bottom-16 -right-4 text-9xl text-black/5 dark:text-white/5 font-serif transform rotate-12 group-hover:rotate-0 transition-transform duration-500">"</div>
+            
+            <div class="relative z-10 min-h-[120px] flex flex-col justify-center items-center">
+                <p id="quoteText" class="text-xl md:text-2xl font-bold mb-4 transition-opacity duration-700 ease-in-out opacity-0 text-black dark:text-white">Loading wisdom...</p>
+                <p id="quoteAuthor" class="text-sm md:text-base font-black uppercase tracking-widest text-nbrand-purple transition-opacity duration-700 ease-in-out opacity-0">- The Internet</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="max-w-5xl mx-auto border-t-4 border-black dark:border-white pt-6 pb-12 mt-4 text-center font-bold uppercase text-sm text-black dark:text-white reveal-on-scroll">
+        <p>Built with <i class="ph-fill ph-heart text-nbrand-pink animate-pulse-glow inline-block"></i> and too much caffeine.</p>
+        <p class="mt-2 text-gray-600 dark:text-gray-400">© 2026 Sawyer Schulz. All rights reserved.</p>
+        <p class="mt-6 text-xs font-mono text-gray-400 dark:text-gray-500 tracking-widest">v1.3.0 // EDGE-DEPLOYED</p>
+    </footer>
+
+    <script>
+        // --- SETTINGS (THEME, SOUND, CURSOR) LOGIC ---
+        const htmlElement = document.documentElement;
+        const themeIcon = document.getElementById('themeIcon');
+        const soundIcon = document.getElementById('soundIcon');
+        const cursorIcon = document.getElementById('cursorIcon');
+        
+        if (localStorage.theme === 'dark') {
+            htmlElement.classList.add('dark');
+            if(themeIcon) themeIcon.classList.replace('ph-moon', 'ph-sun');
+        } else {
+            htmlElement.classList.remove('dark');
+            localStorage.theme = 'light';
+            if(themeIcon) themeIcon.classList.replace('ph-sun', 'ph-moon');
+        }
+
+        window.toggleTheme = function() {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                themeIcon.classList.replace('ph-sun', 'ph-moon');
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                themeIcon.classList.replace('ph-moon', 'ph-sun');
+            }
+        }
+
+        let audioCtx = null;
+        if (localStorage.soundEnabled === 'true') {
+            if(soundIcon) soundIcon.classList.replace('ph-speaker-slash', 'ph-speaker-high');
+        } else {
+            localStorage.soundEnabled = 'false';
+            if(soundIcon) soundIcon.classList.replace('ph-speaker-high', 'ph-speaker-slash');
+        }
+
+        window.toggleSound = function() {
+            if (localStorage.soundEnabled === 'true') {
+                localStorage.soundEnabled = 'false';
+                soundIcon.classList.replace('ph-speaker-high', 'ph-speaker-slash');
+            } else {
+                localStorage.soundEnabled = 'true';
+                soundIcon.classList.replace('ph-speaker-slash', 'ph-speaker-high');
+                playThock(); 
+            }
+        }
+
+        function playThock() {
+            if (localStorage.soundEnabled !== 'true') return;
+            try {
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const oscillator = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                oscillator.type = 'square'; 
+                oscillator.frequency.setValueAtTime(150, audioCtx.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.03);
+                gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+                oscillator.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                oscillator.start();
+                oscillator.stop(audioCtx.currentTime + 0.03);
+            } catch(e) {}
+        }
+        document.addEventListener('keydown', playThock);
+
+        if (localStorage.cursorEnabled === 'true') {
+            document.body.classList.add('custom-cursor-enabled');
+            if(cursorIcon) cursorIcon.classList.replace('ph-mouse-pointer', 'ph-crosshair');
+        } else {
+            localStorage.cursorEnabled = 'false';
+        }
+
+        window.toggleCursor = function() {
+            if (document.body.classList.contains('custom-cursor-enabled')) {
+                document.body.classList.remove('custom-cursor-enabled');
+                localStorage.cursorEnabled = 'false';
+                cursorIcon.classList.replace('ph-crosshair', 'ph-mouse-pointer');
+            } else {
+                document.body.classList.add('custom-cursor-enabled');
+                localStorage.cursorEnabled = 'true';
+                cursorIcon.classList.replace('ph-mouse-pointer', 'ph-crosshair');
+            }
+        }
+
+        // --- RETRO HIT COUNTER ---
+        const hitCounterEl = document.getElementById('hitCounter');
+
+        // --- SCROLL ANIMATIONS ---
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // --- DYNAMIC QUOTES LOGIC ---
+        async function fetchQuote() {
+            const quoteEl = document.getElementById('quoteText');
+            const authorEl = document.getElementById('quoteAuthor');
+            const timerBar = document.getElementById('quoteTimerBar');
+            
+            try {
+                quoteEl.style.opacity = 0;
+                authorEl.style.opacity = 0;
+                if (timerBar) {
+                    timerBar.style.transition = 'none';
+                    timerBar.style.width = '0%';
+                }
+                const res = await fetch('https://dummyjson.com/quotes/random');
+                const data = await res.json();
+                setTimeout(() => {
+                    quoteEl.innerText = `"${data.quote}"`;
+                    authorEl.innerText = `- ${data.author}`;
+                    quoteEl.style.opacity = 1;
+                    authorEl.style.opacity = 1;
+                    if (timerBar) {
+                        timerBar.style.transition = 'width 20s linear';
+                        timerBar.style.width = '100%';
+                    }
+                }, 700); 
+            } catch (err) {
+                console.error('Failed to fetch quote', err);
+            }
+        }
+        fetchQuote();
+        setInterval(fetchQuote, 20000);
+
+        // --- API CONFIGURATION ---
+        const WORKER_URL = 'https://myportfoliodata.sawyerbobk563.workers.dev/';
+
+        // --- IFRAME LOGIC ---
+        window.openIframe = function(title, url) {
+            document.getElementById('iframeTitle').innerText = title;
+            document.getElementById('previewIframe').src = url;
+            const modal = document.getElementById('iframeModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            setTimeout(() => document.getElementById('iframeCard').classList.remove('scale-95'), 10);
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        window.closeIframe = function() {
+            const modal = document.getElementById('iframeModal');
+            document.getElementById('iframeCard').classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.getElementById('previewIframe').src = ''; 
+                document.body.style.overflow = ''; 
+            }, 300);
+        }
+
+        // --- EXTENDED ABOUT MODAL LOGIC ---
+        window.openExtendedAbout = function() {
+            const modal = document.getElementById('extendedAboutModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        window.closeExtendedAbout = function() {
+            const modal = document.getElementById('extendedAboutModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; 
+        }
+
+        // --- HOW IT WORKS MODAL LOGIC ---
+        window.openHowItWorks = function() {
+            const modal = document.getElementById('howItWorksModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        window.closeHowItWorks = function() {
+            const modal = document.getElementById('howItWorksModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; 
+        }
+
+        // --- OPENED SITES LOGIC ---
+        let openedSitesData = [];
+
+        window.openOpenedSites = function() {
+            const modal = document.getElementById('openedSitesModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            renderOpenedSites();
+            if(isAdmin) document.getElementById('addSiteForm').classList.remove('hidden');
+            else document.getElementById('addSiteForm').classList.add('hidden');
+        }
+
+        window.closeOpenedSites = function() {
+            const modal = document.getElementById('openedSitesModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; 
+        }
+
+        window.renderOpenedSites = function() {
+            const container = document.getElementById('openedSitesList');
+            if (!openedSitesData || openedSitesData.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 font-bold italic">No opened sites listed yet.</p>';
+                return;
+            }
+            container.innerHTML = openedSitesData.map((site, index) => `
+                <div class="brutal-card p-6 bg-white dark:bg-zinc-800 flex flex-col sm:flex-row justify-between gap-4 transform transition-all duration-300 hover:-translate-y-1">
+                    <div>
+                        <h3 class="text-2xl font-black uppercase mb-2 text-nbrand-blue">${site.name}</h3>
+                        <p class="text-black dark:text-white font-medium mb-4">${site.desc}</p>
+                        <a href="${site.url}" target="_blank" rel="noopener noreferrer" class="brutal-btn inline-flex bg-nbrand-yellow text-black text-sm px-4 py-2">Visit Site <i class="ph-bold ph-arrow-up-right"></i></a>
+                    </div>
+                    ${isAdmin ? `<button onclick="deleteOpenedSite(${index})" class="self-start brutal-btn bg-red-500 text-white px-4 py-2"><i class="ph-bold ph-trash"></i></button>` : ''}
+                </div>
+            `).join('');
+        }
+
+        window.submitOpenedSite = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById('siteName').value;
+            const url = document.getElementById('siteUrl').value;
+            const desc = document.getElementById('siteDesc').value;
+            
+            openedSitesData.unshift({ name, url, desc });
+            renderOpenedSites();
+            e.target.reset();
+            await saveGlobalState(); 
+        }
+
+        window.deleteOpenedSite = async function(index) {
+            openedSitesData.splice(index, 1);
+            renderOpenedSites();
+            await saveGlobalState();
+        }
+
+        // --- GUESTBOOK MODAL LOGIC ---
+        let guestbookData = [];
+
+        window.openGuestbook = function() {
+            const modal = document.getElementById('guestbookModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+            renderGuestbook();
+        }
+
+        window.closeGuestbook = function() {
+            const modal = document.getElementById('guestbookModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = ''; 
+        }
+
+        window.openGuestbookHow = function() {
+            const modal = document.getElementById('guestbookHowModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        window.closeGuestbookHow = function() {
+            const modal = document.getElementById('guestbookHowModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        window.renderGuestbook = function() {
+            const container = document.getElementById('guestbookEntries');
+            if (!guestbookData || guestbookData.length === 0) {
+                container.innerHTML = '<p class="text-gray-500 font-bold italic">No signatures yet. Be the first!</p>';
+                return;
+            }
+            
+            container.innerHTML = guestbookData.map((entry, index) => `
+                <div class="glass-panel p-4 flex flex-col sm:flex-row justify-between gap-2 border-black/20 dark:border-white/20 transform -rotate-1 hover:rotate-0 transition-transform">
+                    <div>
+                        <span class="font-black text-nbrand-purple mr-2">${entry.name}</span>
+                        <span class="text-black dark:text-white font-medium break-all">${entry.message}</span>
+                    </div>
+                    <div class="flex items-center gap-4 self-end sm:self-center">
+                        <span class="text-xs font-bold text-gray-500 whitespace-nowrap">${entry.date}</span>
+                        ${isAdmin ? `<button onclick="deleteGuestbookEntry(${index})" class="text-red-500 hover:text-red-700 transition-colors"><i class="ph-bold ph-trash text-xl"></i></button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.submitGuestbook = async function(e) {
+            e.preventDefault();
+            const nameInput = document.getElementById('gbName');
+            const msgInput = document.getElementById('gbMessage');
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i>';
+            btn.disabled = true;
+
+            const newEntry = {
+                name: nameInput.value,
+                message: msgInput.value,
+                date: new Date().toLocaleDateString()
+            };
+
+            guestbookData.unshift(newEntry);
+            if (guestbookData.length > 50) guestbookData.pop(); 
+            renderGuestbook();
+            
+            try {
+                await saveGlobalState();
+                nameInput.value = '';
+                msgInput.value = '';
+                btn.classList.replace('bg-nbrand-yellow', 'bg-nbrand-green');
+                btn.innerHTML = '<i class="ph-bold ph-check"></i>';
+            } catch(err) {
+                btn.classList.replace('bg-nbrand-yellow', 'bg-red-500');
+                btn.innerHTML = '<i class="ph-bold ph-x"></i>';
+            }
+            
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.className = 'brutal-btn bg-nbrand-yellow text-black whitespace-nowrap';
+                btn.innerHTML = originalText;
+            }, 2000);
+        }
+
+        window.deleteGuestbookEntry = async function(index) {
+            guestbookData.splice(index, 1);
+            renderGuestbook();
+            await saveGlobalState();
+        }
+
+        // Global state saver used by Arrays to avoid overwriting HTML strings
+        window.saveGlobalState = async function() {
+            if (WORKER_URL === 'YOUR_WORKER_URL_HERE') return;
+            const res = await fetch(WORKER_URL);
+            if(res.ok) {
+                const current = await res.json();
+                const payload = current.data || {};
+                payload.guestbook = guestbookData;
+                payload.openedSites = openedSitesData;
+                await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            }
+        }
+
+        // --- NAVIGATION LOGIC ---
+        const menuBtn = document.getElementById('menuBtn');
+        const navPanel = document.getElementById('navPanel');
+        const menuIconBtn = document.getElementById('menuIcon');
+        const navLinks = document.querySelectorAll('.nav-link');
+        let isMenuOpen = false;
+
+        window.toggleMenu = function() {
+            isMenuOpen = !isMenuOpen;
+            if (isMenuOpen) {
+                navPanel.classList.remove('translate-x-full');
+                menuIconBtn.classList.replace('ph-list', 'ph-x');
+            } else {
+                navPanel.classList.add('translate-x-full');
+                menuIconBtn.classList.replace('ph-x', 'ph-list');
+            }
+        }
+
+        if (menuBtn) {
+            menuBtn.addEventListener('click', window.toggleMenu);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (isMenuOpen) window.toggleMenu();
+            });
+        });
+
+        // --- ADMIN & CLOUDFLARE WORKER LOGIC ---
+        let isAdmin = false;
+        let addingType = 'project'; 
+        
+        const editableSections = [
+            'aboutMeContent', 'extAboutMeContent', 'flightSchoolContent', 'extAthleticsContent',
+            'extTechStack', 'extDesignStyles', 'extEduJourney', 'resumeContent'
+        ];
+
+        async function loadFromWorker() {
+            if (WORKER_URL === 'YOUR_WORKER_URL_HERE') return; 
+            try {
+                const response = await fetch(WORKER_URL);
+                if (!response.ok) throw new Error("Failed to load");
+                
+                const result = await response.json();
+                
+                if(result.hits !== undefined && hitCounterEl) {
+                    hitCounterEl.innerText = result.hits.toString().padStart(6, '0');
+                }
+
+                if(result.data) {
+                    if(result.data.projects) document.getElementById('projectsGrid').innerHTML = result.data.projects;
+                    if(result.data.lab) document.getElementById('labGrid').innerHTML = result.data.lab;
+                    if(result.data.customSections) document.getElementById('customSectionsContainer').innerHTML = result.data.customSections;
+                    if(result.data.guestbook) guestbookData = result.data.guestbook;
+                    if(result.data.openedSites) openedSitesData = result.data.openedSites;
+                    
+                    editableSections.forEach(id => {
+                        if(result.data[id]) {
+                            const el = document.getElementById(id);
+                            if(el) el.innerHTML = result.data[id];
+                        }
+                    });
+                }
+            } catch (e) {
+                console.warn("Worker Connection Issue:", e.message);
+                if(hitCounterEl) hitCounterEl.innerText = "ERROR";
+            }
+        }
+        
+        loadFromWorker();
+
+        window.openLoginModal = function() {
+            if (isMenuOpen) window.toggleMenu();
+            document.getElementById('loginModal').classList.remove('hidden');
+            document.getElementById('loginModal').classList.add('flex');
+            setTimeout(() => document.getElementById('loginCard').classList.remove('scale-95'), 10);
+        }
+
+        window.closeModal = function(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+            if(modalId === 'loginModal') {
+                document.getElementById('loginError').classList.add('hidden');
+                document.getElementById('usernameInput').value = '';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        window.handleLogin = function() {
+            const user = document.getElementById('usernameInput').value;
+            const pass = document.getElementById('passwordInput').value;
+            
+            if (user === 'Sawyer' && pass === 'admin') {
+                isAdmin = true;
+                window.closeModal('loginModal');
+                
+                // Toggle Sign In/Out Buttons
+                document.getElementById('signInBtn').classList.add('hidden');
+                document.getElementById('signOutBtn').classList.remove('hidden');
+                
+                activateEditMode();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        window.handleSignOut = function() {
+            // Simplest way to clear memory state and reset UI safely
+            location.reload();
+        }
+
+        window.activateEditMode = function() {
+            editableSections.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) {
+                    el.contentEditable = "true";
+                    el.classList.add('border-2', 'border-dashed', 'border-black', 'dark:border-white', 'p-4', 'bg-[#FFF9C4]', 'dark:bg-yellow-900', 'shadow-inner');
+                }
+            });
+
+            // Make Custom Sections Editable
+            document.querySelectorAll('#customSectionsContainer .editable-header, #customSectionsContainer .editable-content').forEach(el => {
+                el.contentEditable = "true";
+                el.classList.add('border-2', 'border-dashed', 'border-black', 'dark:border-white', 'p-4', 'bg-[#FFF9C4]', 'dark:bg-yellow-900', 'shadow-inner');
+            });
+            
+            document.getElementById('adminControls').classList.remove('hidden');
+            document.getElementById('adminControls').classList.add('flex');
+
+            injectDeleteButtons('projectsGrid');
+            injectDeleteButtons('labGrid');
+            injectDeleteButtons('customSectionsContainer');
+        }
+
+        window.injectDeleteButtons = function(containerId) {
+            const container = document.getElementById(containerId);
+            if(!container) return;
+            const items = container.children;
+            for(let i = 0; i < items.length; i++) {
+                if(!items[i].querySelector('.admin-delete-btn')) {
+                    const btn = document.createElement('button');
+                    btn.className = 'admin-delete-btn absolute top-2 right-2 w-10 h-10 bg-red-500 brutal-border text-white font-black rounded-full flex items-center justify-center z-30 hover:bg-red-700 transition-colors shadow-sm';
+                    btn.innerHTML = '<i class="ph-bold ph-trash text-xl"></i>';
+                    btn.onclick = () => items[i].remove();
+                    items[i].appendChild(btn);
+                }
+            }
+        }
+
+        window.openAddModal = function(type) {
+            addingType = type;
+            document.getElementById('addModalTitle').innerText = type === 'project' ? 'Add New Drop' : 'Add Lab Item';
+            document.getElementById('addItemModal').classList.remove('hidden');
+            document.getElementById('addItemModal').classList.add('flex');
+            setTimeout(() => document.getElementById('addItemCard').classList.remove('scale-95'), 10);
+        }
+
+        window.submitNewItem = function() {
+            const title = document.getElementById('itemTitle').value || 'New Item';
+            const desc = document.getElementById('itemDesc').value || 'Description goes here.';
+            const tags = document.getElementById('itemTags').value;
+            const link = document.getElementById('itemLink').value;
+            const previewLink = document.getElementById('itemPreview') ? document.getElementById('itemPreview').value : '';
+
+            let newHTML = '';
+
+            if (addingType === 'project') {
+                const tagsHtml = tags.split(',').filter(t=>t.trim()).map(t => `<span class="brutal-tag">${t.trim()}</span>`).join('');
+                newHTML = `
+                <div class="brutal-card group hover:-translate-y-2 transition-transform duration-200 relative">
+                    <div class="h-40 bg-nbrand-pink border-b-4 border-black dark:border-white relative overflow-hidden flex items-center justify-center p-6">
+                        <i class="ph-fill ph-star text-7xl text-white group-hover:scale-125 transition-transform duration-300"></i>
+                    </div>
+                    <div class="p-6 bg-white dark:bg-zinc-800">
+                        <h3 class="text-2xl font-bold mb-2">${title}</h3>
+                        <p class="text-gray-700 dark:text-gray-300 font-medium mb-4">${desc}</p>
+                        <div class="flex justify-between items-end">
+                            <div class="flex gap-2 flex-wrap">${tagsHtml}</div>
+                            <div class="flex gap-2">
+                                ${previewLink ? `<button onclick="openIframe('${title}', '${previewLink}')" class="h-10 px-4 brutal-border bg-nbrand-green text-black font-bold text-sm uppercase rounded-xl flex items-center justify-center hover:-translate-y-1 hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)] transition-all"><i class="ph-bold ph-eye mr-2"></i> Preview</button>` : ''}
+                                ${link ? `<a href="${link}" target="_blank" class="w-10 h-10 brutal-border bg-nbrand-yellow text-black rounded-full flex items-center justify-center hover:bg-black hover:text-white transition-colors"><i class="ph-bold ph-arrow-up-right"></i></a>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                document.getElementById('projectsGrid').insertAdjacentHTML('beforeend', newHTML);
+                injectDeleteButtons('projectsGrid');
+            } else {
+                newHTML = `
+                <div class="glass-panel p-6 relative overflow-hidden group transform rotate-1 hover:rotate-0 hover:scale-105 transition-all duration-300">
+                    <div class="absolute top-4 right-4 bg-black text-white dark:bg-white dark:text-black text-xs font-bold px-2 py-1 uppercase rounded-md animate-pulse">NEW</div>
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-2"><i class="ph-bold ph-lightbulb text-2xl"></i> ${title}</h3>
+                    <p class="text-gray-800 dark:text-gray-200 font-medium text-sm">${desc}</p>
+                </div>`;
+                document.getElementById('labGrid').insertAdjacentHTML('beforeend', newHTML);
+                injectDeleteButtons('labGrid');
+            }
+
+            document.getElementById('itemTitle').value = '';
+            document.getElementById('itemDesc').value = '';
+            document.getElementById('itemTags').value = '';
+            document.getElementById('itemLink').value = '';
+            if(document.getElementById('itemPreview')) document.getElementById('itemPreview').value = '';
+            window.closeModal('addItemModal');
+        }
+
+        window.addCustomSection = function() {
+            const container = document.getElementById('customSectionsContainer');
+            const newSection = document.createElement('section');
+            newSection.className = 'brutal-card glass-panel bg-white/80 dark:bg-zinc-800/80 p-8 reveal-on-scroll relative mb-12 transition-all duration-500 hover:-translate-y-1 hover:shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] dark:hover:shadow-[12px_12px_0px_0px_rgba(255,255,255,1)]';
+            newSection.innerHTML = `
+                <div class="absolute -top-4 -left-4 bg-nbrand-pink brutal-border px-3 py-1 text-sm font-black text-black transform -rotate-6 z-10 shadow-sm animate-pulse">CUSTOM</div>
+                <h2 class="text-3xl font-black uppercase mb-6 flex items-center gap-3 editable-header text-nbrand-orange w-full outline-none">
+                    <i class="ph-fill ph-asterisk"></i> New Custom Section
+                </h2>
+                <div class="text-lg font-medium leading-relaxed editable-content outline-none bg-white/50 dark:bg-black/50 p-6 rounded-xl brutal-border border-dashed w-full text-black dark:text-white">
+                    <p>Edit this text! This is a brand new custom section. Add whatever you want here.</p>
+                </div>
+            `;
+            container.appendChild(newSection);
+            
+            // Instantly apply edit styles
+            newSection.querySelectorAll('.editable-header, .editable-content').forEach(el => {
+                el.contentEditable = "true";
+                el.classList.add('border-2', 'border-dashed', 'border-black', 'dark:border-white', 'p-4', 'bg-[#FFF9C4]', 'dark:bg-yellow-900', 'shadow-inner');
+            });
+            
+            injectDeleteButtons('customSectionsContainer');
+            
+            // Scroll to the new section
+            newSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function getCleanHTML(containerId) {
+            const clone = document.getElementById(containerId).cloneNode(true);
+            clone.querySelectorAll('.admin-delete-btn').forEach(btn => btn.remove());
+            return clone.innerHTML;
+        }
+
+        window.saveToCloudflare = async function() {
+            if (WORKER_URL === 'YOUR_WORKER_URL_HERE') return;
+            
+            const saveBtn = document.querySelector('#adminControls button');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i> Saving...';
+
+            try {
+                const getRes = await fetch(WORKER_URL);
+                let payload = {};
+                if(getRes.ok) {
+                    const current = await getRes.json();
+                    payload = current.data || {};
+                }
+
+                payload.projects = getCleanHTML('projectsGrid');
+                payload.lab = getCleanHTML('labGrid');
+                payload.customSections = getCleanHTML('customSectionsContainer');
+                
+                editableSections.forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) payload[id] = el.innerHTML;
+                });
+
+                const res = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                if (!res.ok) throw new Error("Worker responded with an error.");
+
+                saveBtn.classList.replace('bg-nbrand-green', 'bg-nbrand-yellow');
+                saveBtn.innerHTML = '<i class="ph-bold ph-check"></i> Saved!';
+                setTimeout(() => {
+                    saveBtn.classList.replace('bg-nbrand-yellow', 'bg-nbrand-green');
+                    saveBtn.innerHTML = originalText;
+                }, 2000);
+            } catch (e) {
+                console.error("Save error: ", e);
+                alert("Failed to save changes to the API.");
+                saveBtn.innerHTML = originalText;
+            }
+        }
+
+        // --- EMAILJS LOGIC ---
+        emailjs.init("H1Q7r_KdpW6yYyqn3");
+
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const btn = document.getElementById('submitEmailBtn');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = '<i class="ph-bold ph-spinner animate-spin"></i> Sending...';
+            btn.disabled = true;
+
+            emailjs.sendForm('service_17usvk3', 'template_27rg9cj', this)
+                .then(() => {
+                    btn.innerHTML = 'Sent! <i class="ph-bold ph-check"></i>';
+                    btn.classList.replace('bg-nbrand-yellow', 'bg-nbrand-green');
+                    this.reset();
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.replace('bg-nbrand-green', 'bg-nbrand-yellow');
+                        btn.disabled = false;
+                    }, 4000);
+                }, (error) => {
+                    btn.innerHTML = 'Error!';
+                    btn.classList.replace('bg-nbrand-yellow', 'bg-red-500');
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.classList.replace('bg-red-500', 'bg-nbrand-yellow');
+                        btn.disabled = false;
+                    }, 4000);
+                    console.log('FAILED...', error);
+                });
+        });
+    </script>
+</body>
+</html>
