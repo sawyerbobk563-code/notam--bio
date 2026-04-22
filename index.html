@@ -143,6 +143,32 @@
         .dark ::-webkit-scrollbar-track { background: #121212; border-left: 4px solid white; }
         ::-webkit-scrollbar-thumb { background: #FF90E8; border: 4px solid black; border-right: none; }
         .dark ::-webkit-scrollbar-thumb { border: 4px solid white; border-right: none; }
+
+        /* GitHub stat pill shimmer skeleton */
+        .gh-skeleton {
+            background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        .dark .gh-skeleton {
+            background: linear-gradient(90deg, #3f3f46 25%, #52525b 50%, #3f3f46 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* GitHub repo card language dot */
+        .lang-dot {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
     </style>
 </head>
 <body class="text-black dark:text-white antialiased min-h-screen py-8 px-4 sm:px-8 overflow-x-hidden relative transition-colors duration-300">
@@ -578,7 +604,9 @@ await fetch(WORKER_URL, {
             </div>
         </header>
 
-        <!-- About Me Section -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <!-- ABOUT ME SECTION — with GitHub live stats injected below   -->
+        <!-- ═══════════════════════════════════════════════════════════ -->
         <section id="about" class="brutal-card bg-white dark:bg-zinc-800 p-8 reveal-on-scroll transform hover:-rotate-1 transition-transform duration-500 relative">
             <h2 class="text-3xl font-black uppercase mb-6 flex items-center gap-3">
                 <i class="ph-fill ph-user-circle text-nbrand-blue"></i>
@@ -592,7 +620,28 @@ await fetch(WORKER_URL, {
                     When I'm not writing code, I'm probably optimizing my mechanical keyboard switches, drinking too much iced coffee, or trying to convince people that CSS is a real programming language.
                 </p>
             </div>
-            
+
+            <!-- ── GitHub Live Stats Bar ── -->
+            <div class="mt-6 pt-5 border-t-4 border-black dark:border-white border-dashed">
+                <div class="flex items-center gap-2 mb-3">
+                    <i class="ph-bold ph-github-logo text-xl text-black dark:text-white"></i>
+                    <span class="font-black uppercase text-sm tracking-widest text-black dark:text-white">GitHub Stats</span>
+                    <a href="https://github.com/sawyerbobk563-code" target="_blank" rel="noopener noreferrer"
+                       class="ml-auto text-xs font-bold uppercase tracking-wider text-gray-500 hover:text-black dark:text-gray-400 dark:hover:text-white transition-colors underline decoration-nbrand-pink underline-offset-4">
+                        @sawyerbobk563-code ↗
+                    </a>
+                </div>
+                <!-- Stat pills rendered here by JS; skeletons shown while loading -->
+                <div id="githubStatsBar" class="flex flex-wrap gap-3">
+                    <span class="gh-skeleton w-28 h-7">&nbsp;</span>
+                    <span class="gh-skeleton w-24 h-7">&nbsp;</span>
+                    <span class="gh-skeleton w-24 h-7">&nbsp;</span>
+                    <span class="gh-skeleton w-20 h-7">&nbsp;</span>
+                    <span class="gh-skeleton w-32 h-7">&nbsp;</span>
+                </div>
+            </div>
+            <!-- ── /GitHub Live Stats Bar ── -->
+
             <div class="mt-8">
                 <button onclick="openExtendedAbout()" class="brutal-btn bg-nbrand-purple text-white">
                     <i class="ph-bold ph-arrows-out-simple"></i> Read Full Bio
@@ -602,12 +651,16 @@ await fetch(WORKER_URL, {
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
+            <!-- ══════════════════════════════════════════════════════════════ -->
+            <!-- RECENT DROPS — pinned manual cards + live GitHub repos below  -->
+            <!-- ══════════════════════════════════════════════════════════════ -->
             <section id="projects" class="space-y-6 reveal-on-scroll relative">
                 <h2 class="text-3xl font-black uppercase flex items-center gap-3 glass-panel inline-block px-4 py-2 transform -rotate-1 text-black dark:text-white">
                     <i class="ph-fill ph-lightning text-nbrand-yellow animate-pulse"></i>
                     Recent Drops
                 </h2>
 
+                <!-- Manually curated / Cloudflare-backed cards -->
                 <div id="projectsGrid" class="space-y-6">
                     <div class="brutal-card group hover:-translate-y-2 transition-transform duration-300 relative transform -rotate-1 hover:rotate-0 z-10 hover:z-20">
                         <div class="absolute -left-2 -top-2 bg-nbrand-yellow brutal-border px-2 py-1 text-xs font-black text-black transform -rotate-12 z-10 shadow-[2px_2px_0px_0px_#000] dark:shadow-[2px_2px_0px_0px_#fff] animate-wiggle">HOT</div>
@@ -673,6 +726,44 @@ await fetch(WORKER_URL, {
                         </div>
                     </div>
                 </div>
+
+                <!-- ── Live GitHub Repos divider ── -->
+                <div class="flex items-center gap-3 pt-2">
+                    <div class="flex-1 border-t-4 border-dashed border-black/30 dark:border-white/30"></div>
+                    <span class="flex items-center gap-2 font-black text-sm uppercase tracking-widest text-black dark:text-white bg-nbrand-yellow px-3 py-1 brutal-border rounded-lg transform -rotate-1">
+                        <i class="ph-bold ph-github-logo"></i> Live from GitHub
+                    </span>
+                    <div class="flex-1 border-t-4 border-dashed border-black/30 dark:border-white/30"></div>
+                </div>
+
+                <!-- Repo cards injected here by fetchGitHubData() -->
+                <div id="githubReposGrid" class="space-y-4">
+                    <!-- Skeleton loaders -->
+                    <div class="brutal-card p-6 bg-white dark:bg-zinc-800">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="gh-skeleton w-40 h-6 rounded">&nbsp;</span>
+                            <span class="gh-skeleton w-14 h-6 rounded">&nbsp;</span>
+                        </div>
+                        <span class="gh-skeleton w-full h-4 rounded block mb-2">&nbsp;</span>
+                        <span class="gh-skeleton w-3/4 h-4 rounded block mb-4">&nbsp;</span>
+                        <div class="flex gap-2">
+                            <span class="gh-skeleton w-16 h-6 rounded">&nbsp;</span>
+                            <span class="gh-skeleton w-20 h-6 rounded">&nbsp;</span>
+                        </div>
+                    </div>
+                    <div class="brutal-card p-6 bg-white dark:bg-zinc-800">
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="gh-skeleton w-32 h-6 rounded">&nbsp;</span>
+                            <span class="gh-skeleton w-14 h-6 rounded">&nbsp;</span>
+                        </div>
+                        <span class="gh-skeleton w-full h-4 rounded block mb-2">&nbsp;</span>
+                        <span class="gh-skeleton w-1/2 h-4 rounded block mb-4">&nbsp;</span>
+                        <div class="flex gap-2">
+                            <span class="gh-skeleton w-16 h-6 rounded">&nbsp;</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- ── /Live GitHub Repos ── -->
 
                 <div class="pt-2">
                     <a href="https://github.com/sawyerbobk563-code" target="_blank" rel="noopener noreferrer" class="brutal-btn glass-btn text-black dark:text-white w-full border-black dark:border-white">
@@ -807,7 +898,9 @@ await fetch(WORKER_URL, {
     </footer>
 
     <script>
-        // --- SETTINGS (THEME, SOUND, CURSOR) LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // SETTINGS (THEME, SOUND, CURSOR) LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         const htmlElement = document.documentElement;
         const themeIcon = document.getElementById('themeIcon');
         const soundIcon = document.getElementById('soundIcon');
@@ -892,10 +985,14 @@ await fetch(WORKER_URL, {
             }
         }
 
-        // --- RETRO HIT COUNTER ---
+        // ─────────────────────────────────────────────────────────────────────
+        // RETRO HIT COUNTER
+        // ─────────────────────────────────────────────────────────────────────
         const hitCounterEl = document.getElementById('hitCounter');
 
-        // --- SCROLL ANIMATIONS ---
+        // ─────────────────────────────────────────────────────────────────────
+        // SCROLL ANIMATIONS
+        // ─────────────────────────────────────────────────────────────────────
         const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
         const observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -910,7 +1007,9 @@ await fetch(WORKER_URL, {
             observer.observe(el);
         });
 
-        // --- DYNAMIC QUOTES LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // DYNAMIC QUOTES LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         async function fetchQuote() {
             const quoteEl = document.getElementById('quoteText');
             const authorEl = document.getElementById('quoteAuthor');
@@ -942,10 +1041,201 @@ await fetch(WORKER_URL, {
         fetchQuote();
         setInterval(fetchQuote, 20000);
 
-        // --- API CONFIGURATION ---
+        // ─────────────────────────────────────────────────────────────────────
+        // API CONFIGURATION
+        // ─────────────────────────────────────────────────────────────────────
         const WORKER_URL = 'https://myportfoliodata.sawyerbobk563.workers.dev/';
 
-        // --- IFRAME LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // GITHUB API INTEGRATION
+        // ─────────────────────────────────────────────────────────────────────
+        const GITHUB_USERNAME = 'sawyerbobk563-code';
+
+        // Language → colour mapping (GitHub's official palette subset)
+        const LANG_COLORS = {
+            'JavaScript': '#f1e05a', 'TypeScript': '#3178c6', 'Python': '#3572A5',
+            'HTML': '#e34c26',       'CSS': '#563d7c',        'Vue': '#41b883',
+            'Svelte': '#ff3e00',     'Go': '#00ADD8',         'Rust': '#dea584',
+            'C#': '#178600',         'Java': '#b07219',       'PHP': '#4F5D95',
+            'Ruby': '#701516',       'Shell': '#89e051',      'Kotlin': '#A97BFF',
+            'Dart': '#00B4AB',       'Swift': '#F05138',      'C++': '#f34b7d',
+            'C': '#555555',          'default': '#8b949e'
+        };
+
+        function langColor(lang) {
+            return LANG_COLORS[lang] || LANG_COLORS['default'];
+        }
+
+        // Format big numbers: 1234 → "1.2k"
+        function fmtNum(n) {
+            if (n === undefined || n === null) return '0';
+            if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
+            return n.toString();
+        }
+
+        async function fetchGitHubData() {
+            try {
+                // ── 1. Fetch user profile ───────────────────────────────────
+                const userRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}`, {
+                    headers: { 'Accept': 'application/vnd.github.v3+json' }
+                });
+                
+                if (!userRes.ok) throw new Error(`GitHub user fetch failed: ${userRes.status}`);
+                const user = await userRes.json();
+
+                // Render stat pills in the About Me section
+                const statsBar = document.getElementById('githubStatsBar');
+                if (statsBar) {
+                    statsBar.innerHTML = `
+                        <span class="brutal-tag flex items-center gap-1 bg-nbrand-green text-black">
+                            <i class="ph-fill ph-users"></i> ${fmtNum(user.followers)} Followers
+                        </span>
+                        <span class="brutal-tag flex items-center gap-1 bg-nbrand-blue text-black">
+                            <i class="ph-fill ph-user-plus"></i> ${fmtNum(user.following)} Following
+                        </span>
+                        <span class="brutal-tag flex items-center gap-1 bg-nbrand-yellow text-black">
+                            <i class="ph-fill ph-git-repository"></i> ${user.public_repos} Repos
+                        </span>
+                        ${user.public_gists > 0 ? `
+                        <span class="brutal-tag flex items-center gap-1 bg-nbrand-orange text-black">
+                            <i class="ph-fill ph-file-code"></i> ${user.public_gists} Gists
+                        </span>` : ''}
+                        ${user.location ? `
+                        <span class="brutal-tag flex items-center gap-1 bg-nbrand-purple text-white border-white dark:border-zinc-600">
+                            <i class="ph-fill ph-map-pin"></i> ${user.location}
+                        </span>` : ''}
+                        <a href="${user.html_url}" target="_blank" rel="noopener noreferrer"
+                           class="brutal-tag flex items-center gap-1 bg-black text-white border-black dark:border-white hover:-translate-y-1 transition-transform cursor-pointer">
+                            <i class="ph-bold ph-github-logo"></i> View Profile ↗
+                        </a>
+                    `;
+                }
+
+                // ── 2. Fetch repos ──────────────────────────────────────────
+                const reposRes = await fetch(
+                    `https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12&type=owner`,
+                    { headers: { 'Accept': 'application/vnd.github.v3+json' } }
+                );
+                if (!reposRes.ok) throw new Error(`GitHub repos fetch failed: ${reposRes.status}`);
+                const repos = await reposRes.json();
+
+                const reposGrid = document.getElementById('githubReposGrid');
+                if (!reposGrid || !Array.isArray(repos) || repos.length === 0) {
+                    if (reposGrid) reposGrid.innerHTML = '<p class="font-bold text-gray-500 italic p-4">No public repos found.</p>';
+                    return;
+                }
+
+                // Sort: starred first, then by push date
+                const sorted = [...repos].sort((a, b) => {
+                    if (b.stargazers_count !== a.stargazers_count)
+                        return b.stargazers_count - a.stargazers_count;
+                    return new Date(b.pushed_at) - new Date(a.pushed_at);
+                });
+
+                reposGrid.innerHTML = sorted.map((repo, i) => {
+                    const color = langColor(repo.language);
+                    const rotate = i % 3 === 0 ? '-rotate-1' : i % 3 === 1 ? 'rotate-1' : '-rotate-2';
+                    const updatedAgo = timeAgo(repo.pushed_at);
+                    const starsHtml = repo.stargazers_count > 0
+                        ? `<span class="flex items-center gap-1 font-black text-sm bg-nbrand-yellow text-black brutal-border rounded-lg px-2 py-1 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                               <i class="ph-fill ph-star text-base"></i> ${fmtNum(repo.stargazers_count)}
+                           </span>`
+                        : `<span class="flex items-center gap-1 font-bold text-xs text-gray-400 border-2 border-gray-300 dark:border-zinc-600 rounded-lg px-2 py-1">
+                               <i class="ph-bold ph-star text-sm"></i> 0
+                           </span>`;
+
+                    const forksHtml = repo.forks_count > 0
+                        ? `<span class="flex items-center gap-1 font-bold text-xs brutal-tag bg-nbrand-blue text-black">
+                               <i class="ph-bold ph-git-fork"></i> ${fmtNum(repo.forks_count)}
+                           </span>`
+                        : '';
+
+                    return `
+                    <div class="brutal-card group hover:-translate-y-2 transition-all duration-300 relative transform ${rotate} hover:rotate-0 z-10 hover:z-20 bg-white dark:bg-zinc-800">
+                        <div class="p-5">
+                            <!-- Header row -->
+                            <div class="flex justify-between items-start gap-2 mb-2">
+                                <h3 class="text-lg font-black leading-tight text-black dark:text-white group-hover:text-nbrand-blue transition-colors break-all">
+                                    ${repo.name}
+                                </h3>
+                                <div class="flex items-center gap-2 flex-shrink-0">
+                                    ${starsHtml}
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <p class="text-gray-600 dark:text-gray-300 font-medium text-sm mb-3 leading-relaxed line-clamp-2">
+                                ${repo.description || '<span class="italic text-gray-400">No description</span>'}
+                            </p>
+
+                            <!-- Footer row: language + forks + updated + GH link -->
+                            <div class="flex flex-wrap items-center gap-2 mt-3 pt-3 border-t-2 border-black/10 dark:border-white/10">
+                                ${repo.language ? `
+                                <span class="flex items-center gap-1 font-bold text-xs brutal-tag">
+                                    <span class="lang-dot" style="background:${color};border:1px solid rgba(0,0,0,0.2)"></span>
+                                    ${repo.language}
+                                </span>` : ''}
+                                ${forksHtml}
+                                ${repo.topics && repo.topics.length > 0 ? repo.topics.slice(0,2).map(t =>
+                                    `<span class="brutal-tag text-xs bg-nbrand-pink text-black border-black">${t}</span>`
+                                ).join('') : ''}
+                                <span class="ml-auto text-xs text-gray-400 font-mono whitespace-nowrap">${updatedAgo}</span>
+                                <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer"
+                                   class="brutal-btn bg-[#24292e] dark:bg-zinc-700 text-white py-1 px-3 text-xs rounded-lg flex-shrink-0"
+                                   style="box-shadow:3px 3px 0 rgba(0,0,0,1);">
+                                    <i class="ph-bold ph-github-logo mr-1"></i> Open
+                                </a>
+                            </div>
+                        </div>
+                    </div>`;
+                }).join('');
+
+            } catch (err) {
+                console.warn('GitHub API error:', err.message);
+                // Graceful degradation — show an error card instead of broken skeletons
+                const statsBar = document.getElementById('githubStatsBar');
+                if (statsBar) {
+                    statsBar.innerHTML = `
+                        <span class="brutal-tag flex items-center gap-1 bg-red-100 text-red-700 border-red-400">
+                            <i class="ph-bold ph-warning-circle"></i> GitHub stats unavailable
+                        </span>`;
+                }
+                const reposGrid = document.getElementById('githubReposGrid');
+                if (reposGrid) {
+                    reposGrid.innerHTML = `
+                        <div class="glass-panel p-5 text-center text-gray-500 font-bold border-dashed">
+                            <i class="ph-bold ph-cloud-slash text-2xl mb-2 block"></i>
+                            Could not load GitHub repos right now.
+                            <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" rel="noopener noreferrer"
+                               class="block mt-2 text-nbrand-blue underline hover:text-black transition-colors">
+                                Visit GitHub directly ↗
+                            </a>
+                        </div>`;
+                }
+            }
+        }
+
+        // Helper: relative time string ("3 days ago", "just now", etc.)
+        function timeAgo(dateStr) {
+            if (!dateStr) return '';
+            const seconds = Math.floor((Date.now() - new Date(dateStr)) / 1000);
+            const intervals = [
+                [31536000, 'yr'], [2592000, 'mo'], [604800, 'wk'],
+                [86400, 'd'],    [3600, 'hr'],     [60, 'min']
+            ];
+            for (const [secs, label] of intervals) {
+                const n = Math.floor(seconds / secs);
+                if (n >= 1) return `${n}${label} ago`;
+            }
+            return 'just now';
+        }
+
+        // Kick off GitHub fetch on page load
+        fetchGitHubData();
+
+        // ─────────────────────────────────────────────────────────────────────
+        // IFRAME LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         window.openIframe = function(title, url) {
             document.getElementById('iframeTitle').innerText = title;
             document.getElementById('previewIframe').src = url;
@@ -967,7 +1257,9 @@ await fetch(WORKER_URL, {
             }, 300);
         }
 
-        // --- EXTENDED ABOUT MODAL LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // EXTENDED ABOUT MODAL LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         window.openExtendedAbout = function() {
             const modal = document.getElementById('extendedAboutModal');
             modal.classList.remove('hidden');
@@ -982,7 +1274,9 @@ await fetch(WORKER_URL, {
             document.body.style.overflow = ''; 
         }
 
-        // --- HOW IT WORKS MODAL LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // HOW IT WORKS MODAL LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         window.openHowItWorks = function() {
             const modal = document.getElementById('howItWorksModal');
             modal.classList.remove('hidden');
@@ -997,7 +1291,9 @@ await fetch(WORKER_URL, {
             document.body.style.overflow = ''; 
         }
 
-        // --- OPENED SITES LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // OPENED SITES LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         let openedSitesData = [];
 
         window.openOpenedSites = function() {
@@ -1053,7 +1349,9 @@ await fetch(WORKER_URL, {
             await saveGlobalState();
         }
 
-        // --- GUESTBOOK MODAL LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // GUESTBOOK MODAL LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         let guestbookData = [];
 
         window.openGuestbook = function() {
@@ -1165,7 +1463,9 @@ await fetch(WORKER_URL, {
             }
         }
 
-        // --- NAVIGATION LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // NAVIGATION LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         const menuBtn = document.getElementById('menuBtn');
         const navPanel = document.getElementById('navPanel');
         const menuIconBtn = document.getElementById('menuIcon');
@@ -1193,7 +1493,9 @@ await fetch(WORKER_URL, {
             });
         });
 
-        // --- ADMIN & CLOUDFLARE WORKER LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // ADMIN & CLOUDFLARE WORKER LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         let isAdmin = false;
         let addingType = 'project'; 
         
@@ -1261,7 +1563,6 @@ await fetch(WORKER_URL, {
                 isAdmin = true;
                 window.closeModal('loginModal');
                 
-                // Toggle Sign In/Out Buttons
                 document.getElementById('signInBtn').classList.add('hidden');
                 document.getElementById('signOutBtn').classList.remove('hidden');
                 
@@ -1272,7 +1573,6 @@ await fetch(WORKER_URL, {
         }
 
         window.handleSignOut = function() {
-            // Simplest way to clear memory state and reset UI safely
             location.reload();
         }
 
@@ -1285,7 +1585,6 @@ await fetch(WORKER_URL, {
                 }
             });
 
-            // Make Custom Sections Editable
             document.querySelectorAll('#customSectionsContainer .editable-header, #customSectionsContainer .editable-content').forEach(el => {
                 el.contentEditable = "true";
                 el.classList.add('border-2', 'border-dashed', 'border-black', 'dark:border-white', 'p-4', 'bg-[#FFF9C4]', 'dark:bg-yellow-900', 'shadow-inner');
@@ -1386,15 +1685,12 @@ await fetch(WORKER_URL, {
             `;
             container.appendChild(newSection);
             
-            // Instantly apply edit styles
             newSection.querySelectorAll('.editable-header, .editable-content').forEach(el => {
                 el.contentEditable = "true";
                 el.classList.add('border-2', 'border-dashed', 'border-black', 'dark:border-white', 'p-4', 'bg-[#FFF9C4]', 'dark:bg-yellow-900', 'shadow-inner');
             });
             
             injectDeleteButtons('customSectionsContainer');
-            
-            // Scroll to the new section
             newSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
@@ -1449,7 +1745,9 @@ await fetch(WORKER_URL, {
             }
         }
 
-        // --- EMAILJS LOGIC ---
+        // ─────────────────────────────────────────────────────────────────────
+        // EMAILJS LOGIC
+        // ─────────────────────────────────────────────────────────────────────
         emailjs.init("H1Q7r_KdpW6yYyqn3");
 
         document.getElementById('emailForm').addEventListener('submit', function(event) {
